@@ -13,7 +13,7 @@ On the edSpring team we use `Meteor` for our app architecture. This means our ap
 
 First you will need to install `node` and `Meteor`.
 
->A great place to do this in is on [c9.io](https://c9.io). It is a cloud editor that will make you environment easy to setup.
+>A great place to do this in is on [c9.io](https://c9.io). It is a cloud editor that will make your environment easier to setup.
 
 After cloning the repo locally, you can change to the app directory in the terminal and run `npm install`. When it is done run the `meteor` command. Once it is running you should be able to see the app running at `localhost:3000` in your browser.
 
@@ -23,7 +23,7 @@ As always at edSpring we work as a team. So if you have troubles getting things 
 
 ## Tasks
 
->If you are not able to do one of these tasks, __that is ok__. Write down observations, thoughts and approaches you did make as comments. If you can't do one of the tasks move on to the next one. We are more interested in your process over whether or not you put in the _"right"_ answer.
+>If you are not able to do one of these tasks, __that is ok__. Write down observations, thoughts and approaches you did as comments. If you can't do one of the tasks move on to the next one. We are more interested in your process over whether or not you put in the _"right"_ answer.
 
 ### 1. Fixing tests
 
