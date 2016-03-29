@@ -41,6 +41,19 @@ class App extends Component {
     if (this.state.hideCompleted) {
       filteredTasks = filteredTasks.filter(task => !task.checked);
     }
+
+    // filter out any private tasks not owned by current user
+    var currUserId = this.props.currentUser && this.props.currentUser._id;
+    filteredTasks = filteredTasks.filter(task => {
+      if (currUserId != task.owner) {
+        // current user is not the task owner, filter out private tasks
+        return !task.private
+      } else {
+        // current user is the task owner, don't filter any
+        return true
+      }
+    });
+
     return filteredTasks.map((task) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;
       const showPrivateButton = task.owner === currentUserId;
