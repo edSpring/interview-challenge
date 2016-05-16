@@ -13,8 +13,12 @@ export default class Task extends Component {
     Meteor.call('tasks.remove', this.props.task._id);
   }
 
+  togglePriority() {
+    Meteor.call('tasks.setPriority', this.props.task._id, !this.props.task.priority);
+  }
+
   togglePrivate() {
-    Meteor.call('tasks.setPrivate', this.props.task._id, ! this.props.task.private);
+    Meteor.call('tasks.setPrivate', this.props.task._id, !this.props.task.private);
   }
 
   render() {
@@ -23,6 +27,7 @@ export default class Task extends Component {
     const taskClassName = classnames({
       checked: this.props.task.checked,
       private: this.props.task.private,
+      priority: this.props.task.priority,
     });
 
     return (
@@ -30,7 +35,7 @@ export default class Task extends Component {
         <button className="delete" onClick={this.deleteThisTask.bind(this)}>
           &times;
         </button>
-
+        
         <input
           type="checkbox"
           readOnly
@@ -38,7 +43,9 @@ export default class Task extends Component {
           onClick={this.toggleChecked.bind(this)}
         />
 
-        { !this.props.showPrivateButton ? (
+{/*I ran this code in my browser; it didn't even manifest when I began.
+The problem was in line 44, where a !this was reversing the statement's logic.*/}
+        {this.props.showPrivateButton ? (
           <button className="toggle-private" ref="privateToggleButton" onClick={this.togglePrivate.bind(this)}>
             { this.props.task.private ? 'Private' : 'Public' }
           </button>
@@ -46,6 +53,14 @@ export default class Task extends Component {
 
         <span className="text">
           <strong>{this.props.task.username}</strong>: {this.props.task.text}
+        </span>
+        
+        {/* I have no idea why the class is not binding to this span.  Inspecting the element, it's like
+        this class doesn't even exist. */}
+        <span classname="toggle-priority">
+          <button onClick={this.togglePriority.bind(this)}>
+            { this.props.task.priority ? 'High' : 'Low'}
+          </button>
         </span>
       </li>
     );

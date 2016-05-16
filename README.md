@@ -39,4 +39,4 @@ Please update the code so that only the user that owns a private task sees the t
 
 ### 3. Add your own improvements to the app
 
-We have really enjoyed your work on this app and now we need you to add your own little bit flare to it. Do as much or as little as you like. We are interested in the thought process behind your additions. Why did you make the changes that you did?
+We have really enjoyed your work on this app and now we need you to add your own little bit of flair to it. Do as much or as little as you like. We are interested in the thought process behind your additions. Why did you make the changes that you did?

@@ -39,12 +39,46 @@ class App extends Component {
   renderTasks() {
     let filteredTasks = this.props.tasks;
     if (this.state.hideCompleted) {
-      filteredTasks = filteredTasks.filter(task => !task.checked);
+      filteredTasks = filteredTasks.filter(task => !task.checked);//syntax: function(argument(s) => instructions);
     }
+    
+    // Attempt 1: Can't find task
+    // if (Tasks.owner !== this.userId) {
+    //   filteredTasks = filteredTasks.filter(task => !task.private);
+    // }
+    
+    // Attempt 2: Can't find Tasks
+    // filteredTasks.filter(Tasks.private && Tasks.task.owner !== this.userId);
+    
+    // Attempt 4: Why am I still trying this?
+    // filteredTasks = filteredTasks.filter(Tasks.task.private && Tasks.task.owner !== this.props.currentUser);
+    
+    // Attempt 6: How is METEOR undefined!?
+    // filteredTasks = filteredTasks.filter(Meteor.props.task.private);
+    
+    // Attempt the 7th and final: Hardwiring the fix.  My gut tells me that splice() is not the way to go here, because it changes the original array, but it appears to work, and logging in and out of the To-Do list with two different logins seems to have no adverse effects or permanent alterations to the task list.
+    //console.log(this.props.tasks);
+    for(var i = 0; i < filteredTasks.length; i++) {
+      console.log(filteredTasks[i].owner);
+      console.log(filteredTasks[i].private);
+      if(filteredTasks[i].owner !== this.props.currentUser._id && filteredTasks[i].private){
+        console.log("Yes");
+        filteredTasks.splice(i, 1);
+      }
+    }
+    // At first I had the construction of if(!( === ) && ) in line 64 which did not disallow displaying tasks to someone not logged in at all.  But then I hit on this solution.
+    // I left the console.logs in so you could see how I was narrowing down on the solution.
+    
     return filteredTasks.map((task) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;
       const showPrivateButton = task.owner === currentUserId;
-
+      
+      // Attempt 3: Returned empty list. Why?
+      // {filteredTasks = filteredTasks.filter(task.private && task.owner !== this.props.currentUser)}
+      
+      // Attempt 5: List empty again, error in the debug.js file!?
+      // {filteredTasks = filteredTasks.filter(!(task.private && task.owner !== currentUserId))}
+      
       return (
         <Task
           key={task._id}
