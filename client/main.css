@@ -78,6 +78,18 @@ ul {
   position: relative;
 }
 
+.toggle-priority {
+  position: absolute;
+  right: 30px;
+  font-size: 1em;
+  border: none;
+}
+
+.priority {
+  text-decoration: underline;
+  color: red;
+}
+
 li {
   position: relative;
   list-style: none;
