@@ -19,7 +19,7 @@ After cloning the repo locally, you can change to the app directory in the termi
 
 While this is running, you can run the tests by opening another terminal window, in the repo directory, and running `meteor test --driver-package avital:mocha --port 3100`. This will allow you to open a browser and see any failing tests at `localhost:3100`.
 
->To see the test results in the console you can run `npm run test`. This is the only to run the tests on c9.
+>To see the test results in the console you can run `npm run test`. This is the only way to run the tests on c9.
 
 As always at edSpring we work as a team. So if you have troubles getting things setup reach out to us and we can work together to get you up and running so you can show us what you are capable of.
 
