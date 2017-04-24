@@ -41,6 +41,19 @@ class App extends Component {
     if (this.state.hideCompleted) {
       filteredTasks = filteredTasks.filter(task => !task.checked);
     }
+
+    // filter out any private tasks not owned by current user
+    var currUserId = this.props.currentUser && this.props.currentUser._id;
+    filteredTasks = filteredTasks.filter(task => {
+      if (currUserId != task.owner) {
+        // current user is not the task owner, filter out private tasks
+        return !task.private
+      } else {
+        // current user is the task owner, don't filter any
+        return true
+      }
+    });
+
     return filteredTasks.map((task) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;
       const showPrivateButton = task.owner === currentUserId;
@@ -101,9 +114,39 @@ App.propTypes = {
 export default createContainer(() => {
   Meteor.subscribe('tasks');
 
+  // don't include private non-owned tasks in incompleteCount
+  var userId = Meteor.userId();
+  var incompleteCount = 0
+  if (userId == null) {
+    // get all non-checked and non-private
+    incompleteCount = Tasks.find({
+      $and: [
+        { checked: {$ne: true} },
+        { private: {$ne: true} }
+      ]
+    }).count();
+  } else {
+    var tmpTasks = Tasks.find({
+        checked: { $ne: true}
+    });
+
+    tmpTasks.forEach(function (task) {
+      // if the task is private and I'm the owner, count it
+      if (task.private) {
+        if (task.owner == userId) {
+          incompleteCount += 1;
+        }
+      }
+      else {
+        incompleteCount += 1;
+      }
+    });
+
+  }
+
   return {
     tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
-    incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
+    incompleteCount: incompleteCount,
     currentUser: Meteor.user(),
   };
 }, App);
